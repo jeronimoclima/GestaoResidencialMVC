@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Lancamento>
+
+<div class="container mt-4">   
+
+    <h2 class="mb-4">
+        <i class="bi bi-wallet2"> Dashboard Financeiro </i>
+    </h2>
+
+    <div class=" row mb-4">
+
+       <div class="col-md-4">
+           <div class="card text-white bg-success shadow">
+              <div class="card-body">
+                  <h6 class="card-title">
+                        <i class="bi-arrow-up-circle"></i> Total de Receitas
+                        <h4> R$ @ViewBag.TotalReceitas</h4>
+                  </h6>
+              </div>             
+           </div>
+       </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-danger shadow">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <i class="bi-arrow-up-circle"></i> Total de Despesas
+                        <h4> R$ @ViewBag.TotalDespesas</h4>
+                    </h6>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <i class="bi-arrow-up-circle"></i> Saldo
+                        <h4> R$ @ViewBag.Saldo</h4>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+      
+    
+
+    <!--BOTAO NOVO ANCAMENTO-->
+    <div class="mb-4">
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Novo Lançamento
+        </a>
+    </div>
+
+    <!--TABELA-->
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+
+                    <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Categoria</th>
+                    <th>Data</th>
+                    <th class="text-center">Ação</th>
+
+                    </tr>
+                    
+                </thead>
+                <tbody>
+
+                    @foreach(var item in Model)
+                    {
+                        <tr>
+                            <td> @item.Nome</td>
+                            <td> @item.Descricao</td>
+                            <td>
+                                @if(item.Tipo == "Receita")
+                                {
+                                    <spam class="badge bg-success">
+                                        <i class="bi bi-arrow-up"></i> Receita
+                                    </spam>
+                                }
+                                else
+                                {
+                                    <spam class="badge bg-danger">
+                                        <i class="bi bi-arrow-down"></i> Despesa
+                                    </spam>
+                                }
+                            </td>
+                            <td> R$ @item.Valor</td>
+                            <td>@item.Categoria</td>
+                            <td>@item.Data.ToShortDateString()</td>
+                            <td class="text-center">
+                                <a  asp-action="Delete" 
+                                    asp-route-id="@item.Id" 
+                                    class="btn btn-sn btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (!Model.Any())
+            {
+                <div class="text-center text-muted">
+                    <i class=" bi bi-info-circle"></i>
+                    Nenhum lançamento cadastrado.
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
