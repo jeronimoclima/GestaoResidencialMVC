@@ -19,7 +19,8 @@ namespace GestaoResidencialMVC.Controllers
         }
 
         public IActionResult Privacy()
-        {
+        {  
+
             return View();
         }
 
